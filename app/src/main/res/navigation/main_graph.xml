@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main_graph"
+            app:startDestination="@id/action_home">
+    <fragment
+            android:id="@+id/action_home"
+            tools:layout="@layout/fragment_home"
+            android:name="com.example.coffeeappnavigation.home.HomeFragment"
+<<<<<<< HEAD
+            android:label="Home">
+=======
+            android:label="HomeFragment">
+>>>>>>> 68c6dd19726c5fe7af0ca246266cb7c241e1a28e
+        <action
+                android:id="@+id/action_action_home_to_action_health"
+                app:destination="@id/action_health"
+                />
+    </fragment>
+    <fragment
+            android:id="@+id/action_health"
+            tools:layout="@layout/fragment_health"
+            android:name="com.example.coffeeappnavigation.health.HealthFragment"
+            android:label="fragment_health"/>
+</navigation>

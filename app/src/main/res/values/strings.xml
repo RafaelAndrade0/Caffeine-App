@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CoffeeAppNavigation</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_health">Health</string>
+
+    <!-- Messages -->
+    <string name="msg_caffeine">You have consumed:</string>
+    <string name="quantity_caffeine">%d mg</string>
+    <string name="tab_graphic">Summary</string>
+    <string name="small_coffee_description">Small Coffee</string>
+    <string name="medium_coffee_description">Medium Coffee</string>
+    <string name="large_coffee_description">Large Coffee</string>
+    <string name="caffeine_view">Caffeine: %s mg</string>
+    <string name="coffee_size_view">Coffee Size: %s</string>
+</resources>
