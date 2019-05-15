@@ -41,19 +41,9 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
-
-
         homeViewModel.allCoffee().observe(this, Observer { coffee ->
-//            recyclerView.smoothScrollToPosition(0)
+            recyclerView.smoothScrollToPosition(0)
             adapter.submitList(coffee)
-//            Handler().postDelayed({
-//                recyclerView.smoothScrollToPosition(0)
-//            }, 1000)
-//            if (coffee.isNotEmpty()) {
-//                recyclerView.post {
-//                    recyclerView.smoothScrollToPosition(0)
-//                }
-//            }
         })
 
         val coffeeValue = pref?.getInt("caffeineValue", 0)
@@ -65,20 +55,22 @@ class HomeFragment : Fragment() {
             val coffee = Coffee(caffeine = 10, coffeeSize = 0)
             homeViewModel.saveCoffee(coffee)
 //            saveCoffee(coffee)
+            caffeine += 10
+            saveOnSharedPreferences(caffeine)
         }
         imageMedium.setOnClickListener {
-            val coffee = Coffee(caffeine = 20, coffeeSize = 1)
+            //            val coffee = Coffee(caffeine = 20, coffeeSize = 1)
 //            saveCoffee(coffee)
             homeViewModel.deleteAll()
 //            caffeine += 20
-//            saveOnSharedPreferences(caffeine)
+            saveOnSharedPreferences(0)
         }
         imageLarge.setOnClickListener {
             val coffee = Coffee(caffeine = 30, coffeeSize = 2)
             homeViewModel.saveCoffee(coffee)
 //            saveCoffee(coffee)
-//            caffeine += 30
-//            saveOnSharedPreferences(caffeine)
+            caffeine += 30
+            saveOnSharedPreferences(caffeine)
         }
     }
 

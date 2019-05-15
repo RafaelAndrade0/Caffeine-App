@@ -1,12 +1,15 @@
 package com.example.coffeeappnavigation.health
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.coffeeappnavigation.R
 import kotlinx.android.synthetic.main.fragment_health.*
+import me.itangqi.waveloadingview.WaveLoadingView
 
 class HealthFragment : Fragment() {
 
@@ -24,15 +27,28 @@ class HealthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        arguments?.run {
-//            val fullName = getString("full_name")
-//            val age = getInt("age")
-//            txtMessage.text = "$fullName - $age"
-//        }
+        configureWaveLoading()
+    }
 
-        val caffeine = pref?.getInt("caffeineValue", 0)
-        textQuantity.text = getString(R.string.quantity_caffeine, caffeine)
-        progressBar3.progress = caffeine ?: 0
+    private fun calculateTotalPercentage(caffeine: Int) = (caffeine * 100) / 400
 
+    private fun configureWaveLoading() {
+        val totalCaffeine = pref?.getInt("caffeineValue", 0)
+        val totalPercentage = calculateTotalPercentage(caffeine = totalCaffeine ?: 1)
+
+        waveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)
+        waveLoadingView.topTitle = getString(R.string.msg_caffeine)
+        waveLoadingView.centerTitle = getString(R.string.quantity_caffeine, totalCaffeine)
+        waveLoadingView.bottomTitle = getString(R.string.porcentage_caffeine, totalPercentage)
+        waveLoadingView.progressValue = totalPercentage
+        waveLoadingView.borderWidth = 5.0F
+        waveLoadingView.setAmplitudeRatio(60)
+        waveLoadingView.waveColor = ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+        waveLoadingView.borderColor = Color.GRAY
+        waveLoadingView.setAnimDuration(3000)
+        waveLoadingView.pauseAnimation()
+        waveLoadingView.resumeAnimation()
+        waveLoadingView.cancelAnimation()
+        waveLoadingView.startAnimation()
     }
 }

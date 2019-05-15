@@ -7,43 +7,14 @@
         android:layout_height="match_parent"
         tools:context=".health.HealthFragment">
 
-    <ProgressBar
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            style="?android:progressBarStyleHorizontal"
-            android:progress="100"
-            android:progressDrawable="@drawable/circle"
-            android:id="@+id/progressBar3"
-            android:layout_marginTop="32dp"
+    <me.itangqi.waveloadingview.WaveLoadingView
+            android:id="@+id/waveLoadingView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:wlv_shapeType="circle"
+            android:layout_marginTop="76dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="55dp"
-            android:layout_marginEnd="55dp"
-            android:max="100"
-            app:layout_constraintHorizontal_bias="1.0"/>
-
-    <TextView
-            android:text="@string/msg_caffeine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textMsgCaffe"
-            android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="@+id/progressBar3"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="97dp"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-            tools:text="@string/quantity_caffeine"
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textQuantity"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textMsgCaffe"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textMsgCaffe"
-            app:layout_constraintEnd_toEndOf="@+id/textMsgCaffe"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

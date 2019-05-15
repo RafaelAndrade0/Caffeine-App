@@ -8,11 +8,8 @@
             android:id="@+id/action_home"
             tools:layout="@layout/fragment_home"
             android:name="com.example.coffeeappnavigation.home.HomeFragment"
-<<<<<<< HEAD
             android:label="Home">
-=======
-            android:label="HomeFragment">
->>>>>>> 68c6dd19726c5fe7af0ca246266cb7c241e1a28e
+
         <action
                 android:id="@+id/action_action_home_to_action_health"
                 app:destination="@id/action_health"
