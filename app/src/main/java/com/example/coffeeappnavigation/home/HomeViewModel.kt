@@ -11,6 +11,8 @@ class HomeViewModel(
     private val repository: CoffeeRepository
 ) : ViewModel() {
 
+    private val deletedItems = mutableListOf<Coffee>()
+
     fun saveCoffee(coffee: Coffee) {
         repository.save(coffee)
     }
@@ -21,5 +23,19 @@ class HomeViewModel(
 
     fun deleteAll() {
         repository.deleteAll()
+    }
+
+    fun delete(vararg nCoffee: Coffee) {
+        repository.delete(*nCoffee)
+        deletedItems.clear()
+        deletedItems.addAll(nCoffee)
+    }
+
+    fun undoDelete() {
+        if (deletedItems.isNotEmpty()) {
+            for (coffee in deletedItems) {
+                repository.save(coffee)
+            }
+        }
     }
 }

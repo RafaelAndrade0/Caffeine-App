@@ -55,4 +55,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'me.itangqi.waveloadingview:library:0.3.5'
+
+    implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
 }

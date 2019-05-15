@@ -19,6 +19,10 @@ class RoomRepository(database: CoffeeDatabase) : CoffeeRepository {
         return coffeeDao.allCoffess()
     }
 
+    override fun delete(vararg nCoffee: Coffee) {
+        coffeeDao.delete(*nCoffee)
+    }
+
     override fun deleteAll() {
         coffeeDao.deleteAll()
     }

@@ -1,20 +1,23 @@
 package com.example.coffeeappnavigation.home
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeeappnavigation.R
 import com.example.coffeeappnavigation.commom.MainActivity
 import com.example.coffeeappnavigation.model.Coffee
+import com.google.android.material.snackbar.Snackbar
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -41,6 +44,8 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
 
+        setRecyclerViewItemTouchListener(adapter)
+
         homeViewModel.allCoffee().observe(this, Observer { coffee ->
             recyclerView.smoothScrollToPosition(0)
             adapter.submitList(coffee)
@@ -52,23 +57,18 @@ class HomeFragment : Fragment() {
         caffeine = coffeeValue ?: 0
 
         imageSmall.setOnClickListener {
-            val coffee = Coffee(caffeine = 10, coffeeSize = 0)
-            homeViewModel.saveCoffee(coffee)
-//            saveCoffee(coffee)
+            homeViewModel.saveCoffee(Coffee(caffeine = 10, coffeeSize = 0))
+            showFancyToast(getString(R.string.small_coffee_description))
             caffeine += 10
             saveOnSharedPreferences(caffeine)
         }
         imageMedium.setOnClickListener {
-            //            val coffee = Coffee(caffeine = 20, coffeeSize = 1)
-//            saveCoffee(coffee)
             homeViewModel.deleteAll()
-//            caffeine += 20
             saveOnSharedPreferences(0)
         }
         imageLarge.setOnClickListener {
-            val coffee = Coffee(caffeine = 30, coffeeSize = 2)
-            homeViewModel.saveCoffee(coffee)
-//            saveCoffee(coffee)
+            homeViewModel.saveCoffee(Coffee(caffeine = 30, coffeeSize = 2))
+            showFancyToast(getString(R.string.large_coffee_description))
             caffeine += 30
             saveOnSharedPreferences(caffeine)
         }
@@ -80,11 +80,48 @@ class HomeFragment : Fragment() {
         editor?.apply()
     }
 
+    private fun setRecyclerViewItemTouchListener(adapter: HomeAdapter) {
+        val itemTouchCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    viewHolder1: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+                    val position = viewHolder.adapterPosition
+                    homeViewModel.delete(adapter.getCoffeeAt(position))
+                    undoSnackbar()
+                }
+            }
+        val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
     private fun saveCoffee(coffee: Coffee) {
         if (activity is MainActivity) {
             val listener = activity as OnButtonClick
             listener.onButtonClick(coffee)
         }
+    }
+
+    private fun undoSnackbar() {
+        Snackbar.make(requireView(), "Item Removido!", Snackbar.LENGTH_LONG)
+            .setAction(
+                "Reverter"
+            ) {
+                homeViewModel.undoDelete()
+            }.show()
+    }
+
+    private fun showFancyToast(msg: String) {
+        FancyToast.makeText(
+            activity, "$msg added!", FancyToast.LENGTH_SHORT,
+            FancyToast.SUCCESS, false
+        ).show()
     }
 
     interface OnButtonClick {
