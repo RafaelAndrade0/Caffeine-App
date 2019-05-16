@@ -22,7 +22,7 @@ class HomeAdapter : ListAdapter<Coffee, HomeAdapter.ViewHolder>(HomeDiffCallback
         holder.bind(getItem(position))
     }
 
-    fun getCoffeeAt(position: Int) = getItem(position)
+    fun getCoffeeAt(position: Int): Coffee = getItem(position)
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

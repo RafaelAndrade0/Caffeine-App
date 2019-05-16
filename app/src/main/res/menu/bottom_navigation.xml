@@ -17,7 +17,7 @@
             />
 
     <item
-            android:id="@+id/action_graphic"
+            android:id="@+id/action_summary"
             android:icon="@drawable/ic_graphic"
             android:title="@string/tab_graphic"
             app:showAsAction="ifRoom"

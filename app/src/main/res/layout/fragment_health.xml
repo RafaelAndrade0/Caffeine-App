@@ -9,8 +9,8 @@
 
     <me.itangqi.waveloadingview.WaveLoadingView
             android:id="@+id/waveLoadingView"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             app:wlv_shapeType="circle"
             android:layout_marginTop="76dp"
             app:layout_constraintEnd_toEndOf="parent"

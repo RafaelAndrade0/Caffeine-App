@@ -57,4 +57,9 @@ dependencies {
     implementation 'me.itangqi.waveloadingview:library:0.3.5'
 
     implementation 'com.github.Shashank02051997:FancyToast-Android:0.1.6'
+
+    // Paging Library
+    implementation 'android.arch.paging:runtime:1.0.1'
+
+    implementation 'com.tapadoo.android:alerter:4.0.2'
 }

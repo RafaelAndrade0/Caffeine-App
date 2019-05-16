@@ -15,6 +15,7 @@ import com.example.coffeeappnavigation.commom.MainActivity
 import com.example.coffeeappnavigation.model.Coffee
 import com.google.android.material.snackbar.Snackbar
 import com.shashank.sony.fancytoastlib.FancyToast
+import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
 
         val coffeeValue = pref?.getInt("caffeineValue", 0)
 
-        Toast.makeText(requireContext(), coffeeValue.toString(), Toast.LENGTH_SHORT).show()
+//        Toast.makeText(requireContext(), coffeeValue.toString(), Toast.LENGTH_SHORT).show()
         caffeine = coffeeValue ?: 0
 
         imageSmall.setOnClickListener {
@@ -94,7 +95,8 @@ class HomeFragment : Fragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                     val position = viewHolder.adapterPosition
                     homeViewModel.delete(adapter.getCoffeeAt(position))
-                    undoSnackbar()
+                    undoAlerter()
+//                    undoSnackbar()
                 }
             }
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
@@ -106,6 +108,23 @@ class HomeFragment : Fragment() {
             val listener = activity as OnButtonClick
             listener.onButtonClick(coffee)
         }
+    }
+
+    private fun undoAlerter() {
+        Alerter.create(requireActivity())
+            .setTitle("Item Removed!")
+            .setDuration(4000)
+            .setBackgroundColorRes(R.color.colorPrimary)
+            .setText("Dou you want to revert it?")
+            .enableSwipeToDismiss()
+            .addButton("Yeah", R.style.AlertButton, View.OnClickListener {
+                homeViewModel.undoDelete()
+                Alerter.hide()
+            })
+            .addButton("No", R.style.AlertButton, View.OnClickListener {
+                Alerter.hide()
+            })
+            .show()
     }
 
     private fun undoSnackbar() {
