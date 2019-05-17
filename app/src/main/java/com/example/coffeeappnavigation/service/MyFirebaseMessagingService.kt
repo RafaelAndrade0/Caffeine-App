@@ -1,12 +1,28 @@
 package com.example.coffeeappnavigation.service
 
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
+import android.app.NotificationManager
+import android.content.Context
+import android.media.RingtoneManager
+import androidx.core.app.NotificationCompat
+import com.example.coffeeappnavigation.R
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
-class MyFirebaseMessagingService : Service() {
 
-    override fun onBind(intent: Intent): IBinder {
-        TODO("Return the communication channel to the service.")
+class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+        super.onMessageReceived(remoteMessage)
+        val notificationBuilder = NotificationCompat.Builder(this, "channel_id")
+            .setContentTitle(remoteMessage?.notification?.title)
+            .setContentText(remoteMessage?.notification?.body)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setStyle(NotificationCompat.BigTextStyle())
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+//            .setSmallIcon(R.drawable.cafe_small)
+            .setAutoCancel(true)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(0, notificationBuilder.build())
     }
 }

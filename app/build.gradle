@@ -62,4 +62,11 @@ dependencies {
     implementation 'android.arch.paging:runtime:1.0.1'
 
     implementation 'com.tapadoo.android:alerter:4.0.2'
+
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
+
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+
 }
+apply plugin: 'com.google.gms.google-services'
