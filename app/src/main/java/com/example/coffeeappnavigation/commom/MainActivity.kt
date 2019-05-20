@@ -13,6 +13,7 @@ import com.example.coffeeappnavigation.model.Coffee
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class MainActivity : AppCompatActivity(), HomeFragment.OnButtonClick {
 
     private val navController: NavController by lazy {

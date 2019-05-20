@@ -13,4 +13,6 @@
     <string name="caffeine_view">Caffeine: %s mg</string>
     <string name="coffee_size_view">Coffee Size: %s</string>
     <string name="porcentage_caffeine">%d Percent</string>
+    <string name="coffee_added">%s Added!</string>
+    <string name="coffee_added_msg">Coffee Added With Success!</string>
 </resources>

@@ -1,11 +1,9 @@
 package com.example.coffeeappnavigation.home
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.coffeeappnavigation.model.Coffee
 import com.example.coffeeappnavigation.repository.CoffeeRepository
-import com.example.coffeeappnavigation.repository.RoomRepository
 
 class HomeViewModel(
     private val repository: CoffeeRepository

@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.coffeeappnavigation.R
 import com.example.coffeeappnavigation.commom.MainActivity
+import com.example.coffeeappnavigation.commom.coffeeRandomFacts
 import com.example.coffeeappnavigation.model.Coffee
-import com.google.android.material.snackbar.Snackbar
 import com.shashank.sony.fancytoastlib.FancyToast
 import com.tapadoo.alerter.Alerter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import kotlin.random.Random
 
 
 class HomeFragment : Fragment() {
@@ -25,7 +26,7 @@ class HomeFragment : Fragment() {
     private val pref by lazy {
         activity?.getSharedPreferences("data", 0)
     }
-    private val homeViewModel by sharedViewModel<HomeViewModel>()
+        private val homeViewModel by sharedViewModel<HomeViewModel>()
     private var caffeine: Int = 0
 
     override fun onCreateView(
@@ -44,8 +45,11 @@ class HomeFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+        recyclerView.isNestedScrollingEnabled = false
 
         setRecyclerViewItemTouchListener(adapter)
+
+        textViewDykBody.text = coffeeRandomFacts[Random.nextInt(0, coffeeRandomFacts.size)]
 
         homeViewModel.allCoffee().observe(this, Observer { coffee ->
             recyclerView.smoothScrollToPosition(0)
@@ -53,13 +57,11 @@ class HomeFragment : Fragment() {
         })
 
         val coffeeValue = pref?.getInt("caffeineValue", 0)
-
-//        Toast.makeText(requireContext(), coffeeValue.toString(), Toast.LENGTH_SHORT).show()
         caffeine = coffeeValue ?: 0
 
         imageSmall.setOnClickListener {
             homeViewModel.saveCoffee(Coffee(caffeine = 10, coffeeSize = 0))
-            showFancyToast(getString(R.string.small_coffee_description))
+            showaAlertDialog(R.drawable.cafe_small, getString(R.string.small_coffee_description))
             caffeine += 10
             saveOnSharedPreferences(caffeine)
         }
@@ -69,7 +71,7 @@ class HomeFragment : Fragment() {
         }
         imageLarge.setOnClickListener {
             homeViewModel.saveCoffee(Coffee(caffeine = 30, coffeeSize = 2))
-            showFancyToast(getString(R.string.large_coffee_description))
+            showaAlertDialog(R.drawable.cafe_large, getString(R.string.large_coffee_description))
             caffeine += 30
             saveOnSharedPreferences(caffeine)
         }
@@ -127,20 +129,13 @@ class HomeFragment : Fragment() {
             .show()
     }
 
-    private fun undoSnackbar() {
-        Snackbar.make(requireView(), "Item Removido!", Snackbar.LENGTH_LONG)
-            .setAction(
-                "Reverter"
-            ) {
-                homeViewModel.undoDelete()
-            }.show()
-    }
-
-    private fun showFancyToast(msg: String) {
-        FancyToast.makeText(
-            activity, "$msg added!", FancyToast.LENGTH_SHORT,
-            FancyToast.SUCCESS, false
-        ).show()
+    private fun showaAlertDialog(img: Int, msg: String) {
+        MaterialDialog(requireContext()).show {
+            title(R.string.coffee_added, msg)
+            message(R.string.coffee_added_msg)
+            icon(img)
+            positiveButton(text = "Nice!")
+        }
     }
 
     interface OnButtonClick {

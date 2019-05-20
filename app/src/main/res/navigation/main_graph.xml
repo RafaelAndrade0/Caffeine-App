@@ -19,7 +19,7 @@
             android:id="@+id/action_health"
             tools:layout="@layout/fragment_health"
             android:name="com.example.coffeeappnavigation.health.HealthFragment"
-            android:label="fragment_health">
+            android:label="Health">
         <action
                 android:id="@+id/action_action_health_to_summaryFragment"
                 app:destination="@id/action_summary"/>
@@ -28,5 +28,5 @@
             android:id="@+id/action_summary"
             tools:layout="@layout/fragment_summary"
             android:name="com.example.coffeeappnavigation.summary.SummaryFragment"
-            android:label="SummaryFragment"/>
+            android:label="Summary"/>
 </navigation>
